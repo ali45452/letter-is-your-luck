@@ -59,8 +59,6 @@
         btn.disabled = false;
       }, 5000); // إعادة التفعيل بعد 5 ثواني
     });
-  const socket = io();
-
   function buzz() {
     socket.emit("buzz", { player: "red" });
   }
