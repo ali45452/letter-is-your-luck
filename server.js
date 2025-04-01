@@ -32,14 +32,6 @@ socket.on('buzz', (player) => {
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-io.on("connection", (socket) => {
-  console.log("User connected");
-
-  socket.on("buzz", (data) => {
-    console.log(`${data.player} buzzed!`);
-    io.emit("buzzed", data); // نرسل الإشارة لكل الصفحات
-  });
-});
 http.listen(process.env.PORT || 3000, () => {
   console.log('Server running on port 3000');
 });
