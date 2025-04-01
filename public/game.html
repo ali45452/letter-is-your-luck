@@ -3103,24 +3103,18 @@ window.addEventListener('load', adjustHeight);
       msg.remove();
     }, 5000);
   });
-let lastBuzz = 0;
+    const socket = io();
 
-setInterval(() => {
-  const buzzTime = parseInt(localStorage.getItem("buzzed") || 0);
-
-  if (buzzTime > lastBuzz) {
-    lastBuzz = buzzTime;
-
-    const box = document.getElementById("questionBox");
-    if (box && box.style.display !== "none") {
-      box.style.display = "none"; // 🔥 إخفاء السؤال تمامًا
-
-      setTimeout(() => {
-        box.style.display = "block"; // ✅ يرجع يظهر بعد 3 ثواني
-      }, 3000);
-    }
+socket.on("buzzed", (data) => {
+  console.log(`${data.player} buzzed`);
+  const box = document.getElementById("questionBox");
+  if (box && box.style.display !== "none") {
+    box.style.opacity = "0";
+    setTimeout(() => {
+      box.style.opacity = "1";
+    }, 3000);
   }
-}, 500);
+});
   const selectedCategories = JSON.parse(localStorage.getItem('selectedCategories') || '[]');
 // استخدم selectedCategories لتوليد الأسئلة من الفئات المختارة
 </script>
