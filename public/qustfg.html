@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>اختر فئتك</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #8b0033, #450045);
+      color: white;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 40px;
+      font-size: 2.5em;
+      text-shadow: 1px 1px 4px black;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 20px;
+      width: 80%;
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+
+    .category-btn {
+      background-color: #0066cc;
+      border: none;
+      border-radius: 15px;
+      padding: 15px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .category-btn.active {
+      background-color: #00bfff;
+    }
+
+    .start-btn {
+      padding: 10px 30px;
+      font-size: 1.3em;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .start-btn:hover {
+      background-color: #218838;
+    }
+    .categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 90%;
+  max-width: 900px;
+}
+
+.category-card {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 16px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-bottom: 10px;
+  border: 3px solid transparent;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.category-card.selected {
+  background-color: #e6ffe6;
+  border: 2px solid #28a745;
+  box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+}
+
+.category-card img {
+  width: 50px;
+  height: 50px;
+  margin-left: 15px; /* ← مسافة بين الصورة والنص */
+}
+
+.category-card span {
+  font-weight: bold;
+  font-size: 18px;
+  color: #222;
+}
+#alertBox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background-color: #ffc107;
+  color: #000;
+  padding: 20px 30px;
+  border-radius: 12px;
+  font-weight: bold;
+  box-shadow: 0 0 25px rgba(0,0,0,0.2);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 9999;
+}
+
+#alertBox.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+}
+  </style>
+</head>
+<body>
+
+  <h1>اختر فئتك</h1>
+
+  <div class="categories-grid">
+    <div class="category-card" onclick="toggleCategory(this, 'معلومات عامة')">
+      <img src="images/general.png" alt="معلومات عامة">
+      <span>معلومات عامة</span>
+    </div>
+    <div class="category-card" onclick="toggleCategory(this, 'تاريخ')">
+      <img src="images/history.png" alt="تاريخ">
+      <span>تاريخ</span>
+    </div>
+    <div class="category-card" onclick="toggleCategory(this, 'سيارات')">
+      <img src="images/cars.png" alt="سيارات">
+      <span>سيارات</span>
+    </div>
+    <div class="category-card" onclick="toggleCategory(this, 'القران الكريم')">
+      <img src="images/quran.png" alt="القران الكريم">
+      <span>القران الكريم</span>
+    </div>
+    <div class="category-card" onclick="toggleCategory(this, 'جغرافيا')">
+      <img src="images/geo.png" alt="جغرافيا">
+      <span>جغرافيا</span>
+    </div>
+    <div class="category-card" onclick="toggleCategory(this, 'علوم')">
+      <img src="images/science.png" alt="علوم">
+      <span>علوم</span>
+    </div>
+    <div class="category-card" onclick="toggleCategory(this, 'دين')">
+      <img src="images/religion.png" alt="دين">
+      <span>دين</span>
+    </div>
+    <div class="category-card" onclick="toggleCategory(this, 'Game Of THrones')">
+      <img src="images/got.png" alt="Game Of Thrones">
+      <span>Game Of Thrones</span>
+    </div>
+  </div>
+
+  <button class="start-btn" id="startBtn" onclick="startGame()" disabled>ابدأ اللعب</button>
+  <div id="alertBox" class="alert-hidden">يمكنك اختيار 6 فئات كحد أقصى.</div>
+  <script>
+    const selectedCategories = [];
+
+    function toggleCategory(button, category) {
+  const index = selectedCategories.indexOf(category);
+
+  if (index === -1) {
+    if (selectedCategories.length >= 6) {
+      showAlert("يمكنك اختيار 6 فئات كحد أقصى.");
+      return;
+    }
+    selectedCategories.push(category);
+    button.classList.add('selected');
+  } else {
+    selectedCategories.splice(index, 1);
+    button.classList.remove('selected');
+  }
+  document.getElementById('startBtn').disabled = selectedCategories.length !== 6;
+}
+
+    function startGame() {
+      if (selectedCategories.length === 0) {
+        alert("الرجاء اختيار فئة واحدة على الأقل.");
+        return;
+      }
+      localStorage.setItem('selectedCategories', JSON.stringify(selectedCategories));
+      window.location.href = 'index.html'; // غيّرها حسب اسم صفحة اللعبة
+    }
+    function showAlert(message) {
+  const alertBox = document.getElementById("alertBox");
+  alertBox.textContent = message;
+  alertBox.classList.add("show");
+
+  setTimeout(() => {
+    alertBox.classList.remove("show");
+  }, 3000); // ← يختفي بعد 3 ثواني
+}
+  </script>
+
+</body>
+</html>

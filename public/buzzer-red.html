@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>أنا أول! - الأحمر</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #buzzBtn {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: none;
+      background: radial-gradient(circle at center, #ff3c3c, #111);
+      box-shadow: inset -5px -5px 10px rgba(255,255,255,0.2),
+                  inset 5px 5px 15px rgba(0,0,0,0.4),
+                  0 0 30px #ff3c3c;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    #buzzBtn:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 15px #ff3c3c;
+    }
+    #buzzBtn:disabled {
+      background: #aaa;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <button id="buzzBtn"></button>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const btn = document.getElementById('buzzBtn');
+
+    btn.onclick = () => {
+      socket.emit('buzz', 'الأحمر');
+      btn.disabled = true;
+    };
+
+    socket.on('lock', () => {
+      btn.disabled = true;
+    });
+
+    socket.on('reset', () => {
+      setTimeout(() => {
+        btn.disabled = false;
+      }, 5000); // إعادة التفعيل بعد 5 ثواني
+    });
+  </script>
+</body>
+</html>
