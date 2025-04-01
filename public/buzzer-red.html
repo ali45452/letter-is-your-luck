@@ -59,9 +59,11 @@
         btn.disabled = false;
       }, 5000); // إعادة التفعيل بعد 5 ثواني
     });
-    function buzz() {
-  localStorage.setItem("buzzed", Date.now()); // نرسل إشارة بزمن جديد
-}
+  const socket = io();
+
+  function buzz() {
+    socket.emit("buzz", { player: "red" });
+  }
   </script>
 </body>
 </html>
