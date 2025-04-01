@@ -3103,18 +3103,6 @@ window.addEventListener('load', adjustHeight);
       msg.remove();
     }, 5000);
   });
-    const socket = io();
-
-socket.on("buzzed", (data) => {
-  console.log(`${data.player} buzzed`);
-  const box = document.getElementById("questionBox");
-  if (box && box.style.display !== "none") {
-    box.style.opacity = "0";
-    setTimeout(() => {
-      box.style.opacity = "1";
-    }, 3000);
-  }
-});
   const selectedCategories = JSON.parse(localStorage.getItem('selectedCategories') || '[]');
 // استخدم selectedCategories لتوليد الأسئلة من الفئات المختارة
 </script>
