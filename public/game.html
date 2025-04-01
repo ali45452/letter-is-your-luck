@@ -209,7 +209,7 @@ body {
   <div class="background-letters" id="letterBackground"></div>
   <div id="questionOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.6); z-index:9998;"></div>
 
-  <div id="questionBox" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; padding:30px; border-radius:16px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index:9999; width: 400px; max-width: 90%;">
+  <div id="questionBox" style="display:block; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; padding:30px; border-radius:16px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index:9999; width: 400px; max-width: 90%;">
     <div id="timerBox" style="font-size: 18px; margin-bottom: 15px; color: #007bff; font-weight: bold;">
       الوقت المتبقي: <span id="timerCount">10</span> ثانية
     </div>
@@ -3103,7 +3103,7 @@ window.addEventListener('load', adjustHeight);
       msg.remove();
     }, 5000);
   });
-  let lastBuzz = 0;
+let lastBuzz = 0;
 
 setInterval(() => {
   const buzzTime = parseInt(localStorage.getItem("buzzed") || 0);
@@ -3111,16 +3111,16 @@ setInterval(() => {
   if (buzzTime > lastBuzz) {
     lastBuzz = buzzTime;
 
-    // إخفاء السؤال
     const box = document.getElementById("questionBox");
-    if (box) {
-      box.style.opacity = "0";
+    if (box && box.style.display !== "none") {
+      box.style.display = "none"; // 🔥 إخفاء السؤال تمامًا
+
       setTimeout(() => {
-        box.style.opacity = "1";
+        box.style.display = "block"; // ✅ يرجع يظهر بعد 3 ثواني
       }, 3000);
     }
   }
-}, 500); // نتحقق كل نصف ثانية
+}, 500);
   const selectedCategories = JSON.parse(localStorage.getItem('selectedCategories') || '[]');
 // استخدم selectedCategories لتوليد الأسئلة من الفئات المختارة
 </script>
